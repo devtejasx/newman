@@ -1,4 +1,5 @@
 const _ = require('lodash'),
+    http = require('http'),
     expect = require('chai').expect,
 
     newman = require('../../'),
@@ -241,6 +242,41 @@ describe('Newman run options', function () {
                 expect(err).to.be.null;
                 expect(summary).to.be.ok;
                 done();
+            });
+        });
+
+        it('should stop sending requests once breached by a setNextRequest loop', function (done) {
+            var hits = 0,
+                server = http.createServer(function (req, res) {
+                    hits++;
+                    res.end('ok');
+                });
+
+            server.listen(0, '127.0.0.1', function () {
+                newman.run({
+                    collection: {
+                        item: [{
+                            name: 'poll',
+                            request: `http://127.0.0.1:${server.address().port}/`,
+                            event: [{
+                                listen: 'test',
+                                script: { exec: 'pm.execution.setNextRequest(pm.info.requestName);' }
+                            }]
+                        }]
+                    },
+                    timeout: 500
+                }, function (err) {
+                    var hitsAtTimeout = hits;
+
+                    expect(err.message).to.equal('callback timed out');
+
+                    setTimeout(function () {
+                        server.close();
+                        // a request already in flight when the run timed out may still land
+                        expect(hits - hitsAtTimeout).to.be.at.most(1);
+                        done();
+                    }, 500);
+                });
             });
         });
     });
