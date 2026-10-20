@@ -42,7 +42,8 @@ describe('JUnit reporter', function () {
                         testcase = suite.testcase[0];
                         expect(testcase).to.not.be.empty;
 
-                        expect(testcase.$).to.have.property('classname', 'ASimpleGetRequest');
+                        expect(testcase.$).to.have.property('classname',
+                            'ExampleCollectionWithASingleGetRequest.ASimpleGetRequest');
 
                         expect(suite.$).to.have.property('tests', '1');
                         expect(suite.$).to.have.property('failures', '0');
@@ -83,7 +84,8 @@ describe('JUnit reporter', function () {
                         testcase = suite.testcase[0];
                         expect(testcase).to.not.be.empty;
 
-                        expect(testcase.$).to.have.property('classname', 'StatusCodeTest');
+                        expect(testcase.$).to.have.property('classname',
+                            'ExampleCollectionWithFailingTests.StatusCodeTest');
                         expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                         expect(testcase.failure).to.not.be.empty;
                         expect(testcase.failure[0]._).to.not.be.empty;
@@ -124,7 +126,7 @@ describe('JUnit reporter', function () {
                         testcase = suite.testcase[0];
                         expect(testcase).to.not.be.empty;
 
-                        expect(testcase.$).to.have.property('classname', 'FailedRequest');
+                        expect(testcase.$).to.have.property('classname', 'AssertionErrorTest.FailedRequest');
                         expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                         expect(testcase.failure).to.not.be.empty;
                         expect(testcase.failure[0]._).to.not.be.empty;
@@ -183,7 +185,7 @@ describe('JUnit reporter', function () {
                         testcase = suite.testcase[0];
                         expect(testcase).to.not.be.empty;
 
-                        expect(testcase.$).to.have.property('classname', 'NestedRequestTest');
+                        expect(testcase.$).to.have.property('classname', 'NestedRequestInTest.NestedRequestTest');
 
                         expect(suite.$).to.have.property('tests', '2');
                         expect(suite.$).to.have.property('failures', '0');
@@ -224,7 +226,8 @@ describe('JUnit reporter', function () {
                         testcase = suite.testcase[0];
                         expect(testcase).to.not.be.empty;
 
-                        expect(testcase.$).to.have.property('classname', 'NestedRequestTest');
+                        expect(testcase.$).to.have.property('classname',
+                            'NestedRequestInTestWithFailingTest.NestedRequestTest');
                         expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                         expect(testcase.failure).to.not.be.empty;
                         expect(testcase.failure[0]._).to.not.be.empty;
@@ -235,7 +238,8 @@ describe('JUnit reporter', function () {
                         testcase = suite.testcase[1];
                         expect(testcase).to.not.be.empty;
 
-                        expect(testcase.$).to.have.property('classname', 'NestedRequestTest');
+                        expect(testcase.$).to.have.property('classname',
+                            'NestedRequestInTestWithFailingTest.NestedRequestTest');
                         expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                         expect(testcase.failure).to.not.be.empty;
                         expect(testcase.failure[0]._).to.not.be.empty;
