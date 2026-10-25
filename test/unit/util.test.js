@@ -69,6 +69,14 @@ describe('utility helpers', function () {
 
         it('should validate floating point', function () {
             expect(util.isFloat('123.5')).to.be.true;
+            expect(util.isFloat('1e3')).to.be.true;
+            expect(util.isFloat('0')).to.be.true;
+        });
+
+        it('should not treat hexadecimal or binary strings as floating point', function () {
+            expect(util.isFloat('0x10')).to.be.false;
+            expect(util.isFloat('0b101')).to.be.false;
+            expect(util.isFloat('12abc')).to.be.false;
         });
     });
 
